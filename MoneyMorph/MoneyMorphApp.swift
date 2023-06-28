@@ -11,7 +11,10 @@ import SwiftUI
 struct MoneyMorphApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                LoginView()
+                
+            }
         }
     }
 }
