@@ -85,8 +85,8 @@ struct CustomLoginView: View {
         .frame(maxWidth: .infinity, alignment: .center)
         .fullScreenCover(isPresented: $isLoginViewPresented) {
             LoginView() // Tampilan halaman login yang ingin ditampilkan secara penuh
+            }
         }
-                }
     }
 
 

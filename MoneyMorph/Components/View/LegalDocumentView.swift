@@ -15,11 +15,13 @@ struct LegalDocumentView: View {
             HStack(spacing: 1) {
                 Text("Terms of use")
                     .underline()
+                    .foregroundColor(Color(.systemTeal))
                 
                 Text(". Read our ")
                 
                 Text("Privacy Policy")
                     .underline()
+                    .foregroundColor(Color(.systemTeal))
             }
         }
     }

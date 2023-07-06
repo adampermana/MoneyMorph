@@ -15,7 +15,7 @@ struct ComponentsViewSlide: View {
             let size = geometry.size
             
             IntroView(intro: $activeIntro, size: size) {
-//                USER LOGIN/SIGNUP VIEW
+//                USER LOGIN VIEW
                 VStack(spacing: 10) {
 //                    CUSTOM LOGIN VIEW
                     CustomLoginView()
@@ -77,7 +77,8 @@ struct IntroView<ActionView: View>: View {
                 
 //                TEXT TITLE
                 Text(intro.title)
-                    .font(.system(size: 44))
+                    .font(
+                    Font.custom("Poppins-Bold", size: 47))
                     .fontWeight(.black)
                 
 //                TEXT SUBTITLE
@@ -93,17 +94,23 @@ struct IntroView<ActionView: View>: View {
                     Spacer(minLength: 10)
                         
                     
-//                    Button
+//                    Button Next
                     Button(action: {
                         changeIntro()
                         // Action when the button is tapped
                     }) {
                         Text("Next")
-                            .fontWeight(.bold)
+                            .font(
+                                Font.custom("Poppins-Medium", size: 28))
+                        
                             .foregroundColor(.white)
-                            .frame(width: size.width * 0.4)
+                            
                             .padding(.vertical, 15)
-                            .background(Capsule().fill(amberYellow))
+                            .frame(width: 290)
+                            .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(amberYellow)
+                            )
                             
                     }
                     

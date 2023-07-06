@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>591778748415-80d342i1gbfhugeg6qhj26qq0g7dompi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.591778748415-80d342i1gbfhugeg6qhj26qq0g7dompi</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDQNq8gC5N04-gUIaVGW4sctqy_lXy4Wu4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>591778748415</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.-Adam-Permana.MoneyMorph</string>
+	<key>PROJECT_ID</key>
+	<string>moneymorph-29573</string>
+	<key>STORAGE_BUCKET</key>
+	<string>moneymorph-29573.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:591778748415:ios:6210b22f479f5f1a0239ca</string>
+</dict>
+</plist>
