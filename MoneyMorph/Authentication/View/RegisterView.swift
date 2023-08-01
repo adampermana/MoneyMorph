@@ -14,6 +14,15 @@ struct RegisterView: View {
     @State private var isLoginViewPresented = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
+    private func isValidPassword(_ password: String) -> Bool {
+        // minimum 6 characters long
+        // 1 uppercase character
+        // 1 special char
+        
+        let passwordRegex = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])(?=.*[A-Z]).{6,}$")
+        
+        return passwordRegex.evaluate(with: password)
+    }
     
     let amberYellow = Color("AmberYellow")
     
@@ -61,7 +70,21 @@ struct RegisterView: View {
                                             hint: "Enter password",
                                             leadingIcon: Image(systemName: "lock"),
                                             isPassword: true)
+                        .overlay(
+                             Image(systemName: isValidPassword(password) ? "checkmark" : "xmark")
+                                 .resizable()
+                                 .frame(width: 20, height: 20)
+                                 .foregroundColor(isValidPassword(password) ? .green : .red)
+                                 .padding(.trailing, 10)
+                                 .opacity(password.isEmpty ? 0 : 1)
+                                 .offset(y: 9)
+                                 .animation(.default)
+                                 .transition(.opacity),
+                             alignment: .trailing
+                         )
                         .submitLabel(.next)
+                        
+                       
                     }
                     .padding(14)
                     //                Button Create Account
