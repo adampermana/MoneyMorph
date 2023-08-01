@@ -1,10 +1,3 @@
-//
-//  LoginView.swift
-//  MoneyMorph
-//
-//  Created by Adam Permana on 21/06/23.
-//
-
 import SwiftUI
 import Firebase
 
@@ -14,132 +7,119 @@ struct LoginView: View {
     @State private var isForgotPasswordViewPresented = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    
+    @StateObject private var authManager = AuthManager()
+
     let amberYellow = Color("AmberYellow")
-    
+
     var body: some View {
-        ZStack {
-            Color.white.edgesIgnoringSafeArea(.all)
-            
-            VStack(spacing: 10) {
-                VStack(alignment: .center, spacing: 5) {
-//                    ImageMoneyMorph
-                    Image("MoneyMorphPNG")
-                        .padding(10)
-                    
-//                    Title MoneyMorph
-                    Text("Sign in to Money Morph")
-                        .font(
-                        Font.custom("Poppins-Bold", size: 29))
-                        .foregroundColor(amberYellow)
-                        
+        NavigationView {
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+
+                VStack(spacing: 10) {
+                    VStack(alignment: .center, spacing: 5) {
+                        Image("MoneyMorphPNG")
+                            .padding(10)
+
+                        Text("Sign in to Money Morph")
+                            .font(Font.custom("Poppins-Bold", size: 29))
+                            .foregroundColor(amberYellow)
+
+                    }
+                    .padding(10)
+
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Email Address")
+                            .font(Font.custom("Poppins-Regular", size: 14))
+                            .offset(y: 8)
+
+                        ComponentsTextField(text: $emailID,
+                                            hint: "Enter your Email",
+                                            leadingIcon: Image(systemName: "envelope"))
+                            .keyboardType(.emailAddress)
+                            .autocapitalization(.none)
+                            .textContentType(.emailAddress)
+                            .autocorrectionDisabled()
+                            .submitLabel(.next)
+
+                    }
+
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Password")
+                            .font(Font.custom("Poppins-Regular", size: 14))
+                            .offset(y: 8)
+
+                        ComponentsTextField(text: $password,
+                                            hint: "Enter your Password",
+                                            leadingIcon: Image(systemName: "lock"),
+                                            isPassword: true)
+                            .submitLabel(.next)
+
+
+                    }
+                    .padding(14)
+
+                    HStack(alignment: .lastTextBaseline, spacing: 3) {
+                        Spacer()
+                        Button(action: {
+                            isForgotPasswordViewPresented = true
+                        }) {
+                            Text("Forgot Password?")
+                                .font(Font.custom("Poppins-Regular", size: 17))
+                                .foregroundColor(amberYellow)
+                                .offset(x: -24)
+                        }
+                    }
+                    .fullScreenCover(isPresented: $isForgotPasswordViewPresented) {
+                        ForgotPasswordView()
+                    }
+
+                    // Redirect to HomeView when isLoggedIn is true
+                    Button(action: {
+                        login()
+                    }) {
+                        Text("Log in")
+                            .foregroundColor(.white)
+                            .padding(.vertical, 15)
+                            .frame(width: 300)
+                            .background(RoundedRectangle(cornerRadius: 10).fill(amberYellow))
+                            .font(Font.custom("Poppins-Bold", size: 28))
+                    }
+                    .padding()
                 }
                 .padding(10)
-                
-//                Import and Config email and password
-                VStack(alignment: .leading, spacing: 5) {
-//                    EMAIL
-                    Text("Email Address")
-                        .font(
-                        Font.custom("Poppins-Reguler", size: 14))
-                        .offset(y: 8)
-                    ComponentsTextField(text: $emailID,
-                                        hint: "Enter you Email",
-                                        leadingIcon: Image(systemName: "envelope"))
-                    .keyboardType(.emailAddress)
-                        .autocapitalization(.none) // Nonaktifkan Huruf Kapital
-                        .textContentType(.emailAddress) // Aktifkan copy, paste, dan select all untuk alamat email
-                        .autocorrectionDisabled()
-                        .submitLabel(.next)
-                }
-                
-                VStack(alignment: .leading, spacing: 5) {
-//                    PASSWORD
-                    Text("Password")
-                        .font(
-                        Font.custom("Poppins-Reguler", size: 14))
-                        .offset(y: 8)
-                    
-                    ComponentsTextField(text: $password,
-                                        hint: "Enter you Password",
-                                        leadingIcon: Image(systemName: "lock"),
-                                        isPassword: true)
-                        .autocapitalization(.none) // Nonaktifkan Huruf Kapital
-                        .textContentType(.password) // Aktifkan copy, paste, dan select all untuk alamat email
-                        .submitLabel(.next)
-                }
-                
-//                Config Button: Forgot password, Login and Switch SignUp
-                HStack(alignment: .lastTextBaseline, spacing: 3) {
+
+                VStack {
                     Spacer()
-//                    Forgot password
-                    Button(action: {
-                        // Add action for the "Forgot Password?" button here
-                        isForgotPasswordViewPresented = true // Mengubah status
-                    }) {
-                        Text("Forgot Password?")
-                            .font(
-                            Font.custom("Poppins-Reguler", size: 17))
-                            .foregroundColor(amberYellow)
-                            .offset(x: -24)
-                    }
-                    
+                    SwitchSignUpView()
+                        .offset(y: -60)
                 }
-                
-                .fullScreenCover(isPresented: $isForgotPasswordViewPresented) {
-                    ForgotPasswordView() // Tampilan halaman login yang ingin ditampilkan secara
-                }
-                
-//                Button Login
-                Button(action: {
-                    login()
-                    
-                }) {
-                    Text("Log in")
-                 
-                        .foregroundColor(.white)
-                        .padding(.vertical, 15)
-                        .frame(width: 300)
-                        .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(amberYellow))
-                    .font(
-                    Font.custom("Poppins-Bold", size: 28))
-                }
-                .padding()
+                .padding(-6)
             }
-            
-            .padding(10)
-            
-//            Switch Sign Up
-            VStack {
-                Spacer()
-                SwitchSignUpView()
-                    .offset(y: -60)
+            .padding(-10)
+            .navigationBarHidden(true)
+            .edgesIgnoringSafeArea(.all)
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("Error saat login"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
-            
-            .padding(-6)
         }
-        .padding(-10)
-        .navigationBarHidden(true)
-        .edgesIgnoringSafeArea(.all)
-        
-        .alert(alertMessage, isPresented: $showingAlert) {
-            Button("OK", role: .cancel) {}
+        .environmentObject(authManager)
+        .fullScreenCover(isPresented: $authManager.isLoggedIn) {
+            // Redirect to HomeView when isLoggedIn is true
+            HomeView()
         }
     }
+
     func login() {
-        Auth.auth().signIn(withEmail: emailID, password: password) { result,
-            error in
-            if let error = error { // login error occurred
+        Auth.auth().signIn(withEmail: emailID, password: password) { result, error in
+            if let error = error {
                 print("Login Error cuy: \(error.localizedDescription)")
                 alertMessage = "Login Error Manizz: \(error.localizedDescription)"
                 showingAlert = true
             } else {
                 print("Done Login Maniszz")
-//                TODO: Load List View
+                authManager.isLoggedIn = true // Set isLoggedIn to true on successful login
             }
-            
         }
     }
 }
