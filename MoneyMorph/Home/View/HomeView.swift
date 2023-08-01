@@ -9,7 +9,7 @@
 
 import SwiftUI
 
-struct Item: Identifiable {
+struct Item: Identifiable, Hashable {
     let id = UUID()
     let title: String
     let image: String
@@ -30,7 +30,7 @@ struct HomeView: View {
     
     let spacing: CGFloat = 10
     @State private var numberOfColumns = 3
-    @State private var isShowingDestinationView = false
+    @State private var selectedDestination: Item? = nil
     
     var body: some View {
         NavigationView {
@@ -39,8 +39,11 @@ struct HomeView: View {
                 
                 LazyVGrid(columns: columns, spacing: spacing) {
                     ForEach(items) { item in
-                        NavigationLink(destination: destinationView(for: item), isActive: $isShowingDestinationView) {
+                        NavigationLink(destination: destinationView(for: item), tag: item, selection: $selectedDestination) {
                             ItemView(item: item)
+                                .onTapGesture {
+                                    selectedDestination = item
+                                }
                         }
                         .buttonStyle(ItemButtonStyle(cornerRadius: 20))
                     }
@@ -55,9 +58,9 @@ struct HomeView: View {
             .toolbar {
                 // Back button to dismiss the destination view
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if isShowingDestinationView {
+                    if selectedDestination != nil {
                         Button(action: {
-                            isShowingDestinationView = false
+                            selectedDestination = nil
                         }) {
                             Image(systemName: "chevron.left")
                                 .foregroundColor(.orange) // Set the color to orange
@@ -115,7 +118,7 @@ struct HomeView: View {
         case "Jokes":
             return AnyView(JokeView())
         case "Dog":
-            return AnyView(DogRandomImageView())
+            return AnyView(DogRandomImageView()) // Replace DogRandomImageView() with DogView() or any appropriate view for "Dog"
         case "Age":
             return AnyView(AgePredictionView())
         case "User":
@@ -176,5 +179,3 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
-
-
